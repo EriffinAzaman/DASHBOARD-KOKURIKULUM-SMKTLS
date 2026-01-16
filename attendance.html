@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kehadiran - Dashboard Kokurikulum</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="SMK Tuanku Lailatul Shahreen" class="logo-image">
+                    <div class="logo-text">
+                        <h1>Dashboard Kokurikulum</h1>
+                        <p>SMK Tuanku Lailatul Shahreen 2026</p>
+                        <p class="motto">FOCUS TO BE THE FIRST</p>
+                    </div>
+                </div>
+                <nav>
+                    <a href="index.html" class="nav-btn">🏠 Dashboard</a>
+                    <a href="data.html" class="nav-btn">📊 Data Pelajar</a>
+                    <a href="attendance.html" class="nav-btn active">✅ Kehadiran</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Title -->
+        <section class="mt-3">
+            <div class="flex-between">
+                <div>
+                    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">✅ Rekod Kehadiran</h1>
+                    <p style="color: var(--text-secondary);">Jejaki kehadiran untuk 12 sesi aktiviti kokurikulum</p>
+                </div>
+                <div class="flex gap-1">
+                    <button class="btn btn-success" onclick="exportCurrentTabToPDF()">📄 Eksport PDF</button>
+                    <button class="btn btn-outline" onclick="window.print()">🖨️ Cetak</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <section class="mt-3">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="kelab" onclick="switchTab('kelab')">
+                    🎭 Kelab & Persatuan
+                </button>
+                <button class="tab-btn" data-tab="unit" onclick="switchTab('unit')">
+                    🎖️ Unit Beruniform
+                </button>
+                <button class="tab-btn" data-tab="sukan" onclick="switchTab('sukan')">
+                    ⚽ Sukan & Permainan
+                </button>
+                <button class="tab-btn" data-tab="rumah" onclick="switchTab('rumah')">
+                    🏆 Rumah Sukan
+                </button>
+            </div>
+        </section>
+
+        <!-- Tab Content: Kelab -->
+        <div id="tab-kelab" class="tab-content active">
+            <section class="mt-2">
+                <div class="card">
+                    <div class="flex-between mb-2">
+                        <h3>Kelab & Persatuan</h3>
+                        <div class="filter-group" style="max-width: 300px;">
+                            <select id="filterKelab" onchange="filterAttendance('kelab')">
+                                <option value="all">Semua Kelab</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="attendanceTableKelab">
+                        <p style="text-align: center; padding: 2rem; color: var(--text-muted);">Memuatkan data...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Content: Unit -->
+        <div id="tab-unit" class="tab-content">
+            <section class="mt-2">
+                <div class="card">
+                    <div class="flex-between mb-2">
+                        <h3>Unit Beruniform</h3>
+                        <div class="filter-group" style="max-width: 300px;">
+                            <select id="filterUnit" onchange="filterAttendance('unit')">
+                                <option value="all">Semua Unit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="attendanceTableUnit">
+                        <p style="text-align: center; padding: 2rem; color: var(--text-muted);">Memuatkan data...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Content: Sukan -->
+        <div id="tab-sukan" class="tab-content">
+            <section class="mt-2">
+                <div class="card">
+                    <div class="flex-between mb-2">
+                        <h3>Sukan & Permainan</h3>
+                        <div class="filter-group" style="max-width: 300px;">
+                            <select id="filterSukan" onchange="filterAttendance('sukan')">
+                                <option value="all">Semua Sukan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="attendanceTableSukan">
+                        <p style="text-align: center; padding: 2rem; color: var(--text-muted);">Memuatkan data...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Content: Rumah Sukan -->
+        <div id="tab-rumah" class="tab-content">
+            <section class="mt-2">
+                <div class="card">
+                    <div class="flex-between mb-2">
+                        <h3>Rumah Sukan</h3>
+                        <div class="filter-group" style="max-width: 300px;">
+                            <select id="filterRumah" onchange="filterAttendance('rumah')">
+                                <option value="all">Semua Rumah</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="attendanceTableRumah">
+                        <p style="text-align: center; padding: 2rem; color: var(--text-muted);">Memuatkan data...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Legend -->
+        <section class="mt-3 mb-3">
+            <div class="card">
+                <h3 class="mb-2">📖 Legenda</h3>
+                <div class="flex gap-2" style="flex-wrap: wrap;">
+                    <div class="flex gap-1" style="align-items: center;">
+                        <span
+                            style="display: inline-block; width: 30px; height: 30px; background: #22c55e; border-radius: 6px; text-align: center; line-height: 30px; color: white; font-weight: bold;">✓</span>
+                        <span>Hadir</span>
+                    </div>
+                    <div class="flex gap-1" style="align-items: center;">
+                        <span
+                            style="display: inline-block; width: 30px; height: 30px; background: #ef4444; border-radius: 6px; text-align: center; line-height: 30px; color: white; font-weight: bold;">✗</span>
+                        <span>Tidak Hadir</span>
+                    </div>
+                    <div class="flex gap-1" style="align-items: center;">
+                        <span
+                            style="display: inline-block; width: 30px; height: 30px; background: #eab308; border-radius: 6px; text-align: center; line-height: 30px; color: white; font-weight: bold;">E</span>
+                        <span>Diberi Kebenaran</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Save Indicator -->
+    <div id="saveIndicator" class="save-indicator">
+        <div class="spinner"></div>
+        <span>Menyimpan...</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script src="pdf-export.js"></script>
+    <script src="attendance.js"></script>
+</body>
+
+</html>

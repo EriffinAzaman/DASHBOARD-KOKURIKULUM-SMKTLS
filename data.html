@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pelajar - Dashboard Kokurikulum</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="SMK Tuanku Lailatul Shahreen" class="logo-image">
+                    <div class="logo-text">
+                        <h1>Dashboard Kokurikulum</h1>
+                        <p>SMK Tuanku Lailatul Shahreen 2026</p>
+                        <p class="motto">FOCUS TO BE THE FIRST</p>
+                    </div>
+                </div>
+                <nav>
+                    <a href="index.html" class="nav-btn">🏠 Dashboard</a>
+                    <a href="data.html" class="nav-btn active">📊 Data Pelajar</a>
+                    <a href="attendance.html" class="nav-btn">✅ Kehadiran</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Title -->
+        <section class="mt-3">
+            <div class="flex-between">
+                <div>
+                    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">📊 Data Pelajar Kokurikulum</h1>
+                    <p style="color: var(--text-secondary);">Tapis, cari, dan eksport data pelajar</p>
+                </div>
+                <div class="flex gap-1">
+                    <button class="btn btn-success" onclick="exportToPDF()">📄 Eksport PDF</button>
+                    <button class="btn btn-outline" onclick="exportToCSV(filteredData, 'data_pelajar.csv')">📊 Eksport
+                        CSV</button>
+                    <button class="btn btn-outline" onclick="window.print()">🖨️ Cetak</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="mt-3">
+            <div class="card">
+                <h3 class="mb-2">🔍 Tapis Data</h3>
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Tingkatan</label>
+                        <select id="filterTingkatan" onchange="applyFilters()">
+                            <option value="all">Semua Tingkatan</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Kelas</label>
+                        <select id="filterKelas" onchange="applyFilters()">
+                            <option value="all">Semua Kelas</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Unit Beruniform</label>
+                        <select id="filterUnit" onchange="applyFilters()">
+                            <option value="all">Semua Unit</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Kelab/Persatuan</label>
+                        <select id="filterKelab" onchange="applyFilters()">
+                            <option value="all">Semua Kelab</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Sukan</label>
+                        <select id="filterSukan" onchange="applyFilters()">
+                            <option value="all">Semua Sukan</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Rumah Sukan</label>
+                        <select id="filterRumah" onchange="applyFilters()">
+                            <option value="all">Semua Rumah</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="filter-group">
+                        <label>Cari</label>
+                        <input type="text" id="searchInput" placeholder="Cari nama, kelas, atau maklumat lain..."
+                            oninput="applyFilters()">
+                    </div>
+                </div>
+                <div class="mt-2 flex-between">
+                    <div>
+                        <span style="color: var(--text-secondary);">Menunjukkan <strong id="resultCount">0</strong>
+                            daripada <strong id="totalCount">0</strong> pelajar</span>
+                    </div>
+                    <button class="btn btn-outline" onclick="resetFilters()">🔄 Reset Tapisan</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Table -->
+        <section class="mt-3 mb-3">
+            <div class="card">
+                <div id="dataTable">
+                    <p style="text-align: center; padding: 2rem; color: var(--text-muted);">Memuatkan data...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script src="pdf-export.js"></script>
+    <script>
+        let allData = [];
+        let filteredData = [];
+        let currentSort = { column: null, ascending: true };
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                allData = await loadMasterData();
+                filteredData = [...allData];
+
+                // Populate filters
+                populateAllFilters();
+
+                // Render table
+                renderDataTable();
+
+                // Update counts
+                updateCounts();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showNotification('Ralat memuatkan data', 'error');
+            }
+        });
+
+        // Populate all filter dropdowns
+        function populateAllFilters() {
+            populateFilter('filterTingkatan', getUniqueValues(allData, 'TINGKATAN'), 'Semua Tingkatan');
+            populateFilter('filterKelas', getUniqueValues(allData, 'KELAS'), 'Semua Kelas');
+            populateFilter('filterUnit', getUniqueValues(allData, 'UNIT'), 'Semua Unit');
+            populateFilter('filterKelab', getUniqueValues(allData, 'KELAB/PERSATUAN').concat(getUniqueValues(allData, 'KELAB')), 'Semua Kelab');
+            populateFilter('filterSukan', getUniqueValues(allData, 'SUKAN'), 'Semua Sukan');
+            populateFilter('filterRumah', getUniqueValues(allData, 'RUMAH_SUKAN').concat(getUniqueValues(allData, 'RUMAH')), 'Semua Rumah');
+        }
+
+        // Apply filters
+        function applyFilters() {
+            let data = [...allData];
+
+            // Apply category filters
+            const filters = {
+                TINGKATAN: document.getElementById('filterTingkatan').value,
+                KELAS: document.getElementById('filterKelas').value,
+                UNIT: document.getElementById('filterUnit').value,
+                'KELAB/PERSATUAN': document.getElementById('filterKelab').value,
+                KELAB: document.getElementById('filterKelab').value,
+                SUKAN: document.getElementById('filterSukan').value,
+                RUMAH_SUKAN: document.getElementById('filterRumah').value,
+                RUMAH: document.getElementById('filterRumah').value
+            };
+
+            data = data.filter(row => {
+                for (const [key, value] of Object.entries(filters)) {
+                    if (value && value !== 'all') {
+                        const rowValue = row[key];
+                        if (rowValue !== value) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            });
+
+            // Apply search
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery) {
+                data = searchData(data, searchQuery);
+            }
+
+            filteredData = data;
+            renderDataTable();
+            updateCounts();
+        }
+
+        // Reset filters
+        function resetFilters() {
+            document.getElementById('filterTingkatan').value = 'all';
+            document.getElementById('filterKelas').value = 'all';
+            document.getElementById('filterUnit').value = 'all';
+            document.getElementById('filterKelab').value = 'all';
+            document.getElementById('filterSukan').value = 'all';
+            document.getElementById('filterRumah').value = 'all';
+            document.getElementById('searchInput').value = '';
+            applyFilters();
+        }
+
+        // Handle column sort
+        function handleSort(column) {
+            if (currentSort.column === column) {
+                currentSort.ascending = !currentSort.ascending;
+            } else {
+                currentSort.column = column;
+                currentSort.ascending = true;
+            }
+
+            filteredData = sortData(filteredData, column, currentSort.ascending);
+            renderDataTable();
+        }
+
+        // Render data table
+        function renderDataTable() {
+            const columns = ['BIL', 'NAMA', 'JANTINA', 'TINGKATAN', 'KELAS', 'UNIT', 'KELAB/PERSATUAN', 'KELAB', 'SUKAN', 'RUMAH_SUKAN', 'RUMAH'];
+
+            // Filter out columns that don't exist in data
+            const availableColumns = columns.filter(col =>
+                filteredData.length > 0 && (filteredData[0][col] !== undefined || filteredData.some(row => row[col]))
+            );
+
+            renderTable(filteredData, 'dataTable', availableColumns);
+        }
+
+        // Update counts
+        function updateCounts() {
+            document.getElementById('resultCount').textContent = filteredData.length;
+            document.getElementById('totalCount').textContent = allData.length;
+        }
+
+        // Export to PDF
+        function exportToPDF() {
+            if (!filteredData || filteredData.length === 0) {
+                showNotification('Tiada data untuk dieksport', 'warning');
+                return;
+            }
+
+            exportDataToPDF(filteredData, 'Data_Pelajar_Kokurikulum.pdf');
+        }
+    </script>
+</body>
+
+</html>

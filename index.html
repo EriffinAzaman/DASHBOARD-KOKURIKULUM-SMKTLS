@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kokurikulum - SMK Tuanku Lailatul Shahreen</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="SMK Tuanku Lailatul Shahreen" class="logo-image">
+                    <div class="logo-text">
+                        <h1>Dashboard Kokurikulum</h1>
+                        <p>SMK Tuanku Lailatul Shahreen 2026</p>
+                        <p class="motto">FOCUS TO BE THE FIRST</p>
+                    </div>
+                </div>
+                <nav>
+                    <a href="index.html" class="nav-btn active">🏠 Dashboard</a>
+                    <a href="data.html" class="nav-btn">📊 Data Pelajar</a>
+                    <a href="attendance.html" class="nav-btn">✅ Kehadiran</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Welcome Section -->
+        <section class="mt-3">
+            <div class="card card-gradient">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Selamat Datang! 👋</h2>
+                <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                    Sistem pengurusan data dan kehadiran kokurikulum untuk SMK Tuanku Lailatul Shahreen.
+                    Akses data pelajar, jejaki kehadiran, dan jana laporan dengan mudah.
+                </p>
+            </div>
+        </section>
+
+        <!-- Statistics Overview -->
+        <section class="mt-3">
+            <h2 class="mb-2" style="font-size: 1.5rem;">📈 Statistik Keseluruhan</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalStudents">-</div>
+                    <div class="stat-label">Jumlah Pelajar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalKelab">-</div>
+                    <div class="stat-label">Kelab & Persatuan</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalUnit">-</div>
+                    <div class="stat-label">Unit Beruniform</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalSukan">-</div>
+                    <div class="stat-label">Sukan & Permainan</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rumah Sukan Distribution -->
+        <section class="mt-3">
+            <h2 class="mb-2" style="font-size: 1.5rem;">🏆 Taburan Rumah Sukan</h2>
+            <div class="stats-grid">
+                <div class="stat-card marikh">
+                    <div class="stat-value" style="color: var(--marikh);" id="rumahMarikh">-</div>
+                    <div class="stat-label">🔴 Rumah Marikh</div>
+                </div>
+                <div class="stat-card kejora">
+                    <div class="stat-value" style="color: var(--kejora);" id="rumahKejora">-</div>
+                    <div class="stat-label">🟢 Rumah Kejora (Green)</div>
+                </div>
+                <div class="stat-card neptune">
+                    <div class="stat-value" style="color: var(--neptune);" id="rumahNeptune">-</div>
+                    <div class="stat-label">🟡 Rumah Neptune (Yellow)</div>
+                </div>
+                <div class="stat-card musytari">
+                    <div class="stat-value" style="color: var(--musytari);" id="rumahMusytari">-</div>
+                    <div class="stat-label">🔵 Rumah Musytari (Blue)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="mt-3">
+            <h2 class="mb-2" style="font-size: 1.5rem;">⚡ Akses Pantas</h2>
+            <div class="stats-grid">
+                <a href="data.html" style="text-decoration: none;">
+                    <div class="card card-gradient" style="cursor: pointer;">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">📊</div>
+                        <h3 style="text-align: center; margin-bottom: 0.5rem;">Data Pelajar</h3>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                            Lihat, tapis, dan cari maklumat pelajar
+                        </p>
+                    </div>
+                </a>
+                <a href="attendance.html?tab=kelab" style="text-decoration: none;">
+                    <div class="card card-gradient" style="cursor: pointer;">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🎭</div>
+                        <h3 style="text-align: center; margin-bottom: 0.5rem;">Kelab & Persatuan</h3>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                            Rekod kehadiran kelab dan persatuan
+                        </p>
+                    </div>
+                </a>
+                <a href="attendance.html?tab=unit" style="text-decoration: none;">
+                    <div class="card card-gradient" style="cursor: pointer;">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🎖️</div>
+                        <h3 style="text-align: center; margin-bottom: 0.5rem;">Unit Beruniform</h3>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                            Rekod kehadiran unit beruniform
+                        </p>
+                    </div>
+                </a>
+                <a href="attendance.html?tab=sukan" style="text-decoration: none;">
+                    <div class="card card-gradient" style="cursor: pointer;">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">⚽</div>
+                        <h3 style="text-align: center; margin-bottom: 0.5rem;">Sukan & Permainan</h3>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                            Rekod kehadiran sukan dan permainan
+                        </p>
+                    </div>
+                </a>
+                <a href="attendance.html?tab=rumah" style="text-decoration: none;">
+                    <div class="card card-gradient" style="cursor: pointer;">
+                        <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🏆</div>
+                        <h3 style="text-align: center; margin-bottom: 0.5rem;">Rumah Sukan</h3>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                            Rekod kehadiran aktiviti rumah sukan
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="mt-3 mb-3">
+            <h2 class="mb-2" style="font-size: 1.5rem;">📋 Maklumat Sistem</h2>
+            <div class="card">
+                <div class="flex-between mb-2">
+                    <div>
+                        <h3>Status Sambungan</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Google Sheets API</p>
+                    </div>
+                    <div id="connectionStatus"
+                        style="padding: 0.5rem 1rem; background: var(--glass-bg); border-radius: var(--radius-md);">
+                        <span style="color: var(--warning);">⏳ Menyambung...</span>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <div>
+                        <h3>Kehadiran Dikemas Kini</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Auto-save diaktifkan</p>
+                    </div>
+                    <div style="padding: 0.5rem 1rem; background: var(--glass-bg); border-radius: var(--radius-md);">
+                        <span style="color: var(--success);">✓ Aktif</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Load dashboard statistics
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Load master data
+                const data = await loadMasterData();
+
+                if (data && data.length > 0) {
+                    // Update total students
+                    document.getElementById('totalStudents').textContent = data.length;
+
+                    // Count unique categories
+                    const uniqueKelab = new Set(data.map(row => row.KELAB).filter(Boolean)).size;
+                    const uniqueUnit = new Set(data.map(row => row.UNIT).filter(Boolean)).size;
+                    const uniqueSukan = new Set(data.map(row => row.SUKAN).filter(Boolean)).size;
+
+                    document.getElementById('totalKelab').textContent = uniqueKelab;
+                    document.getElementById('totalUnit').textContent = uniqueUnit;
+                    document.getElementById('totalSukan').textContent = uniqueSukan;
+
+                    // Count Rumah Sukan distribution
+                    const rumahCount = {};
+                    data.forEach(row => {
+                        const rumah = row.RUMAH_SUKAN || row.RUMAH;
+                        if (rumah) {
+                            rumahCount[rumah] = (rumahCount[rumah] || 0) + 1;
+                        }
+                    });
+
+                    document.getElementById('rumahMarikh').textContent = rumahCount['MARIKH'] || 0;
+                    document.getElementById('rumahKejora').textContent = rumahCount['KEJORA'] || 0;
+                    document.getElementById('rumahNeptune').textContent = rumahCount['NEPTUNE'] || 0;
+                    document.getElementById('rumahMusytari').textContent = rumahCount['MUSYTARI'] || 0;
+
+                    // Update connection status
+                    document.getElementById('connectionStatus').innerHTML =
+                        '<span style="color: var(--success);">✓ Berjaya</span>';
+                } else {
+                    document.getElementById('connectionStatus').innerHTML =
+                        '<span style="color: var(--warning);">⚠️ Tiada Data</span>';
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                document.getElementById('connectionStatus').innerHTML =
+                    '<span style="color: var(--danger);">✗ Gagal</span>';
+            }
+        });
+    </script>
+</body>
+
+</html>
