@@ -86,9 +86,9 @@ Untuk menyambung ke Google Sheet anda, ikuti langkah berikut:
 ## 🎨 Kod Warna Rumah Sukan
 
 - 🔴 **Marikh**: Merah (#ef4444)
-- 🟡 **Kejora**: Kuning (#eab308)
-- 🔵 **Neptune**: Biru (#3b82f6)
-- 🟢 **Musytari**: Hijau (#22c55e)
+- 🟡 **Kejora**: Hijau (#22c55e)
+- 🔵 **Neptune**: Kuning (#eab308)
+- 🟢 **Musytari**: Biru (#3b82f6)
 
 ## 💾 Auto-save
 
@@ -144,4 +144,5 @@ Jika menghadapi masalah, sila:
 
 **Dicipta untuk SMK Tuanku Lailatul Shahreen 2026**
 Dashboard Kokurikulum - Pengurusan Data & Kehadiran
+
 
