@@ -1,4 +1,4 @@
-# Dashboard Kokurikulum - SMK Taman Lestari Serdang 2026
+# Dashboard Kokurikulum - SMK Tuanku Lailatul Shahreen 2026
 
 Dashboard pengurusan data dan kehadiran kokurikulum yang canggih dengan reka bentuk moden dan berwarna-warni.
 
@@ -142,5 +142,6 @@ Jika menghadapi masalah, sila:
 
 ---
 
-**Dicipta untuk SMK Taman Lestari Serdang 2026**
+**Dicipta untuk SMK Tuanku Lailatul Shahreen 2026**
 Dashboard Kokurikulum - Pengurusan Data & Kehadiran
+
